@@ -476,29 +476,26 @@ body {
 ==================================== */
 @media (max-width: 768px) {
     .book {
-        width: 250px;
-        height: 350px;
+        width: 300px; /* Keep base internal dimensions */
+        height: 400px;
+        transform: scale(0.85);
     }
     
-    /* Center the book when opened on mobile due to screen size constraints */
+    /* Primero escalamos, y el translateX(150px) local mueve exactamente la mitad del ancho base */
     .book.open {
-        transform: translateX(50%) scale(0.75);
+        transform: scale(0.85) translateX(150px);
     }
-    
-    /* Make left pages invisible when flipped if they overflow the screen, 
-       but for 3D effect we let the user swipe. */
 }
 
 @media (max-width: 480px) {
     .book {
-        width: 100%;
-        max-width: 300px;
+        width: 300px; /* Base dimension */
         height: 400px;
+        transform: scale(0.58);
     }
     
     .book.open {
-        /* Encogerlo lo suficiente para que entren ambas caras en formato vertical */
-        transform: translateX(50%) scale(0.58); 
+        transform: scale(0.58) translateX(150px); 
     }
 }
 
