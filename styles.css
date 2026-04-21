@@ -1,0 +1,566 @@
+:root {
+    --bg-color: #0b0c10;
+    --primary-gold: #f3c669;
+    --secondary-gold: #b3883a;
+    --text-color: #eaeaea;
+    --book-cover: #1c1d25;
+    --book-page: #fdfdfd;
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Poppins', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-body);
+    overflow: hidden; /* Prevent scrolling during phases */
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ==================================
+   PHASE CONTROLLERS
+==================================== */
+.phase {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1.5s ease-in-out;
+}
+
+.phase.active {
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 10;
+}
+
+/* ==================================
+   PHASE 1: WELCOME & CELEBRATION
+==================================== */
+#phase-1 {
+    background: radial-gradient(circle at center, #1b1c26 0%, #0b0c10 100%);
+}
+
+.content-wrapper {
+    z-index: 2;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.welcome-text {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.3;
+    opacity: 0;
+    animation: fadeInUp 2s ease forwards 1.5s;
+}
+
+.highlight-name {
+    color: var(--primary-gold);
+    text-shadow: 0 0 15px rgba(243, 198, 105, 0.4);
+}
+
+.btn-pulse {
+    background: linear-gradient(135deg, var(--primary-gold), var(--secondary-gold));
+    color: #0b0c10;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    font-family: var(--font-body);
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(243, 198, 105, 0.5);
+    opacity: 0;
+    animation: fadeInUp 2s ease forwards 2.5s, pulse 2s infinite 4.5s;
+    transition: transform 0.3s;
+}
+
+.btn-pulse:hover {
+    transform: scale(1.05);
+}
+
+/* CAKE CSS */
+.cake-container {
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeIn 2s ease forwards 0.5s;
+}
+
+.cake {
+    position: relative;
+    width: 200px;
+    height: 120px;
+}
+
+.plate {
+    position: absolute;
+    bottom: -10px;
+    width: 240px;
+    height: 20px;
+    background: #555;
+    border-radius: 50%;
+    left: -20px;
+    box-shadow: 0 10px 10px rgba(0,0,0,0.5);
+}
+
+.layer {
+    position: absolute;
+    width: 200px;
+    background: #ff9a9e; /* Pink cake */
+    border-radius: 10px;
+    box-shadow: inset 0 -5px 15px rgba(0,0,0,0.2);
+}
+
+.layer-bottom {
+    height: 60px;
+    bottom: 0;
+    background: linear-gradient(to bottom, #d4a373, #faedcd);
+}
+
+.layer-top {
+    width: 160px;
+    height: 50px;
+    bottom: 60px;
+    left: 20px;
+    background: linear-gradient(to bottom, #e29578, #ffb5a7);
+}
+
+.candle {
+    position: absolute;
+    width: 10px;
+    height: 35px;
+    background: repeating-linear-gradient(45deg, #fff, #fff 5px, #d62828 5px, #d62828 10px);
+    top: -35px;
+    left: 75px;
+    border-radius: 3px;
+}
+
+.flame {
+    position: absolute;
+    width: 15px;
+    height: 25px;
+    background: var(--primary-gold);
+    top: -30px;
+    left: -2.5px;
+    border-radius: 50% 50% 20% 20%;
+    box-shadow: 0 0 15px var(--primary-gold), 0 0 30px #ff9e00;
+    animation: flicker 1s infinite alternate;
+}
+
+/* BALLOONS */
+.balloons-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.balloon {
+    position: absolute;
+    bottom: -150px;
+    width: 60px;
+    height: 80px;
+    background: var(--primary-gold);
+    border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+    box-shadow: inset -10px -10px 15px rgba(0,0,0,0.2);
+    animation: floatUp 8s ease-in-out infinite;
+    opacity: 0.8;
+}
+
+.balloon::before {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 10px;
+    background: inherit;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.balloon::after {
+    content: "";
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    width: 1px;
+    height: 50px;
+    background: rgba(255,255,255,0.4);
+}
+
+/* ==================================
+   PHASE 2: MEMORY ALBUM (3D BOOK)
+==================================== */
+#phase-2 {
+    background: linear-gradient(to bottom, #11141c, #08090b);
+}
+
+.scene {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    perspective: 1500px;
+}
+
+.book {
+    position: relative;
+    width: 300px; /* Base width */
+    height: 400px;
+    transform-style: preserve-3d;
+    transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+    /* Initially centered */
+}
+
+/* When book opens, shift to right so pages open to the left forming a spread */
+.book.open {
+    transform: translateX(150px);
+}
+
+.page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform-origin: left center;
+    transform-style: preserve-3d;
+    transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+    z-index: var(--z-index);
+}
+
+.page.flipped {
+    transform: rotateY(-180deg);
+}
+
+.front, .back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    background-color: var(--book-page);
+    border-radius: 2px 10px 10px 2px;
+    box-shadow: inset 5px 0 20px rgba(0,0,0,0.1), 2px 5px 15px rgba(0,0,0,0.3);
+    overflow: hidden;
+}
+
+.back {
+    transform: rotateY(180deg);
+    border-radius: 10px 2px 2px 10px;
+    box-shadow: inset -5px 0 20px rgba(0,0,0,0.1), -2px 5px 15px rgba(0,0,0,0.3);
+}
+
+/* Cover Styling */
+.cover .front, .cover .back {
+    background-color: var(--book-cover);
+    color: var(--primary-gold);
+    border: 2px solid var(--secondary-gold);
+}
+
+.cover-design {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+    border: 10px solid transparent;
+    border-image: linear-gradient(to right, var(--primary-gold), var(--secondary-gold)) 1;
+}
+
+.cover-design h2 {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.tap-hint {
+    font-size: 0.9rem;
+    opacity: 0.7;
+    animation: pulse 2s infinite;
+}
+
+/* Content inside pages */
+.page-content {
+    width: 100%;
+    height: 100%;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #333;
+}
+
+.photo-placeholder {
+    width: 100%;
+    height: 70%;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: rotate(-2deg);
+}
+
+.photo-placeholder img,
+.photo-placeholder video {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.text-page {
+    background: repeating-linear-gradient(transparent, transparent 29px, #e3e3e3 30px);
+    background-position: 0 40px;
+    padding-top: 60px;
+}
+
+.dedication {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    line-height: 30px; /* matches lines */
+    text-align: left;
+    width: 100%;
+}
+
+.nav-instructions {
+    margin-top: 40px;
+    text-align: center;
+    color: rgba(255,255,255,0.6);
+    font-size: 0.9rem;
+}
+
+.controls-ui {
+    margin-top: 15px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.nav-btn {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid var(--secondary-gold);
+    color: var(--primary-gold);
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.nav-btn:hover {
+    background: var(--primary-gold);
+    color: black;
+}
+
+/* ==================================
+   PHASE 3: CLIMAX & FIREWORKS
+==================================== */
+#phase-3 {
+    background: radial-gradient(circle at center, #1b0a1d 0%, #05010a 100%);
+}
+
+#fireworks-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.final-message-container {
+    z-index: 2;
+    text-align: center;
+    padding: 20px;
+}
+
+.climax-text {
+    font-family: var(--font-heading);
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    opacity: 0;
+    animation: zoomIn 2s ease forwards 0.5s;
+}
+
+.highlight-name-gold {
+    color: var(--primary-gold);
+    text-shadow: 0 0 20px var(--primary-gold), 0 0 40px #ffbb00;
+}
+
+.climax-subtext {
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    margin-top: 20px;
+    opacity: 0;
+    animation: fadeIn 2s ease forwards 2s;
+}
+
+/* ==================================
+   ANIMACIONES CLAVE
+==================================== */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 15px rgba(243, 198, 105, 0.4); }
+    50% { transform: scale(1.05); box-shadow: 0 0 25px rgba(243, 198, 105, 0.8); }
+    100% { transform: scale(1); box-shadow: 0 0 15px rgba(243, 198, 105, 0.4); }
+}
+
+@keyframes flicker {
+    0% { transform: scale(1); opacity: 0.9; }
+    50% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.8; }
+    90% { opacity: 0.8; }
+    100% { transform: translateY(-100vh) rotate(20deg); opacity: 0; }
+}
+
+@keyframes zoomIn {
+    0% { opacity: 0; transform: scale(0.5); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* ==================================
+   RESPONSIVE DESIGN (MÓVILES)
+==================================== */
+@media (max-width: 768px) {
+    .book {
+        width: 250px;
+        height: 350px;
+    }
+    
+    /* Center the book when opened on mobile due to screen size constraints */
+    .book.open {
+        transform: translateX(120px) scale(0.9);
+    }
+    
+    /* Make left pages invisible when flipped if they overflow the screen, 
+       but for 3D effect we let the user swipe. */
+}
+
+@media (max-width: 480px) {
+    .book {
+        width: 100%;
+        max-width: 300px;
+        height: 400px;
+    }
+    
+    .book.open {
+        /* On very small screens, we shift less and rely on the user seeing one page at a time */
+        transform: translateX(50%) scale(0.85); 
+    }
+}
+
+/* ==================================
+   AUDIO VISUALIZER & CONTROLS
+==================================== */
+.audio-controls {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 100;
+}
+
+.visualizer {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 25px;
+}
+
+.visualizer .bar {
+    width: 6px;
+    background-color: var(--primary-gold);
+    border-radius: 3px;
+    animation: equalize 1s infinite;
+    transform-origin: bottom;
+}
+
+.visualizer .bar:nth-child(1) { height: 100%; animation-duration: 0.8s; }
+.visualizer .bar:nth-child(2) { height: 70%; animation-duration: 1.1s; }
+.visualizer .bar:nth-child(3) { height: 90%; animation-duration: 0.9s; }
+.visualizer .bar:nth-child(4) { height: 50%; animation-duration: 1.2s; }
+.visualizer .bar:nth-child(5) { height: 80%; animation-duration: 1.0s; }
+
+.visualizer.paused .bar {
+    animation-play-state: paused;
+    height: 20% !important;
+    animation: none;
+    transition: height 0.3s ease;
+}
+
+@keyframes equalize {
+    0% { transform: scaleY(1); }
+    50% { transform: scaleY(0.2); }
+    100% { transform: scaleY(1); }
+}
+
+.music-btn {
+    background: transparent;
+    color: var(--primary-gold);
+    border: 1px solid var(--primary-gold);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.music-btn:hover {
+    background: var(--primary-gold);
+    color: #000;
+}

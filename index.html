@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Cumpleaños</title>
+    <!-- CSS y Google Fonts para estética premium -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- FASE 1: La Bienvenida y Celebración -->
+    <section id="phase-1" class="phase active">
+        <!-- Contenedor dinámico de globos -->
+        <div id="balloons-container" class="balloons-container"></div>
+        
+        <div class="content-wrapper">
+            <div class="cake-container">
+                <!-- Construcción de pastel con CSS -->
+                <div class="cake">
+                    <div class="plate"></div>
+                    <div class="layer layer-bottom"></div>
+                    <div class="layer layer-top">
+                        <div class="candle">
+                            <div class="flame"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <h1 class="welcome-text">¡Feliz Cumpleaños,<br><span class="highlight-name">Luzcely</span>!</h1>
+            
+            <button id="btn-receive-gift" class="btn-pulse">Recibir regalo</button>
+        </div>
+    </section>
+
+    <!-- FASE 2: El Álbum de Recuerdos Interactivo -->
+    <section id="phase-2" class="phase hidden">
+        <audio id="bg-music" src="En Otra Vida.mp3" loop></audio>
+        <div class="audio-controls">
+            <div class="visualizer" id="visualizer">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <button id="toggle-music" class="music-btn">Pausar</button>
+        </div>
+        <div class="scene">
+            <div class="book" id="book">
+                <!-- Portada del Álbum (Página 1) -->
+                <div class="page cover front-cover" style="--z-index: 999;">
+                    <div class="front">
+                        <div class="cover-design">
+                            <h2>Álbum de Recuerdos</h2>
+                            <p class="tap-hint">Toca para abrir ➔</p>
+                        </div>
+                    </div>
+                    <div class="back">
+                        <div class="page-content back-cover-inner">
+                            <!-- Cara interna de la portada -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Las hojas dinámicas con las imágenes y videos se inyectarán aquí mediante script.js -->
+
+                <!-- Contraportada final -->
+                <div class="page cover back-cover" id="back-cover-page" style="--z-index: 1;">
+                    <div class="front">
+                        <div class="page-content back-cover-inner">
+                             <!-- Cara interna de la contraportada -->
+                        </div>
+                    </div>
+                    <div class="back">
+                        <div class="cover-design">
+                            <div class="logo-back">✨</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nav-instructions">
+                <p>Usa las flechas, toca los bordes o desliza para navegar.</p>
+                <div class="controls-ui">
+                    <button id="prev-page" class="nav-btn">⬅</button>
+                    <button id="next-page" class="nav-btn">➡</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FASE 3: El Cierre Emotivo -->
+    <section id="phase-3" class="phase hidden">
+        <canvas id="fireworks-canvas"></canvas>
+        <div class="final-message-container">
+            <h1 class="climax-text">¡Feliz Cumpleaños,<br><span class="highlight-name-gold">Luzcely</span>!</h1>
+            <p class="climax-subtext">Que todos tus deseos se cumplan.</p>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
